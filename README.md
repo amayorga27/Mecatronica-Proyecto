@@ -8,10 +8,10 @@ Por otro lado tambien esta pensado para controlarlo por bluetooth desde el movil
 <tbody>
 <tr>
 <td>
-<img src="/Doc/images/Critter.png" alt="Generic version" width="350"></a>
+<img src="/Doc/images/Critter.png" alt="Generic version" width="400"></a>
 </td>
 <td>
-<img src="/Doc/images/Logo.jpeg" alt="Generic version" width="350"></a>
+<img src="/Doc/images/Logo.jpeg" alt="Generic version" width="400"></a>
 </td>
 </tr>
 </tbody>
