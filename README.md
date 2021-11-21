@@ -4,9 +4,18 @@ El Robot que hemos decidido realizar para este proyecto lo hemos encontrado [aqu
 Este es un proyecto basado en arduino desarrollado y explicado por [LittleBots](https://www.instructables.com/member/LittleBots/) en codigo libre, que esta bastante bien explicado tanto el diseño de las piezas como el montaje del mismo. 
 Por otro lado tambien esta pensado para controlarlo por bluetooth desde el movil, pero nosotros en principio no lo controlaremos de esa forma.
 
-<p align="center">
+<table>
+<tbody>
+<tr>
+<td>
 <img src="/Doc/images/Critter.png" alt="Generic version"></a>
-</p>
+</td>
+<td>
+<img src="/Doc/images/Logo.png" alt="Generic version"></a>
+</td>
+</tr>
+</tbody>
+</table>
 
 ---
 ## ELEMENTOS
@@ -28,11 +37,11 @@ Para comenzar expondremos los elementos que necistaremos para realizar este robo
 
 En cuanto a las piezas 3D que utilizaremos para fabricar nuestro robot, hemos partido de las piezas que nos proporciona [LittleBots](https://www.instructables.com/Critter-3D-Printed-Crawling-Arduino-Robot/) y en el caso que hiciese falta se modificarían. Las piezas de las que consta este robot son las siguientes:
 
-- [x] Base del robot
-- [x] Punta de la patas (igual para ambas patas)
-- [x] Hombro de la pata izquierda
-- [x] Hombro de la pata derecha
-- [ ] Caparazón
+- [x] [Base del robot](models/Base.stl)
+- [x] [Punta de la patas](models/Foreleg.stl) (igual para ambas patas)
+- [x] [Hombro de la pata izquierda](models/Upper_Leg_Left.stl)
+- [x] [Hombro de la pata derecha](models/Upper_Leg_Right.stl)
+- [ ] [Caparazón](models/Shell.stl)
 - [ ] (Opcional) Rueda loca trasera
 
 ---
