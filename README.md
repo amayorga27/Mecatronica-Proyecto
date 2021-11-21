@@ -11,7 +11,7 @@ Por otro lado tambien esta pensado para controlarlo por bluetooth desde el movil
 <img src="/Doc/images/Critter.png" alt="Generic version"></a>
 </td>
 <td>
-<img src="/Doc/images/Logo.png" alt="Generic version"></a>
+<img src="/Doc/images/Logo.jpeg" alt="Generic version"></a>
 </td>
 </tr>
 </tbody>
@@ -29,7 +29,7 @@ Para comenzar expondremos los elementos que necistaremos para realizar este robo
 - [ ] Más sensores (opcional)
 
 <p align="center">
-<img src="/Doc/images/piezas.png" alt="Generic version"></a>
+<img src="/Doc/images/piezas.jpg" alt="Generic version"></a>
 </p>
 
 ---
@@ -53,7 +53,7 @@ Una vez impresas las dos partes de la pata probamos a juntarlas con el micro ser
 Una vez teníamos la primera pata unida, procedimos a intentar moverla con nuestra placa Arduino.
 En este paso tuvimos algunos problemas, pero finalmente pudimos controlar el movimiento de la pata con un botón.
 
---
+---
 
 Antes de imprimir la segunda pata, probaremos que funciona la parte de unión a la base, ya que si por lo que sea no encajan, habria que modificar el diseño y de este modo nos ahorramos hacer las dos patas dos veces.
 Y efectivamente nos encontramos con un leve fallo en el modelo. Lo que nos ocurrió es que el micro servo se nos quedaba un poco fuera del encajeque tiene, por lo que al intentar ponerle la corona al otro lado de la base para encajarlo todo, no engarzaban.
