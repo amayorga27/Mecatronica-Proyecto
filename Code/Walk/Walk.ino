@@ -1,5 +1,7 @@
 #include <Servo.h>
 
+#define echoPin 2 
+#define trigPin 3 
 
 Servo leftUp;  // create servo object to control a servo
 Servo leftDown;
@@ -11,6 +13,28 @@ void setup() {
   leftDown.attach(10);
   rightUp.attach(11);
   rightDown.attach(6);
+
+  pinMode(trigPin, OUTPUT); // Sets the trigPin as an OUTPUT
+  pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+  Serial.begin(9600);
+}
+
+
+void measure() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(1);
+  // Sets the trigPin HIGH (ACTIVE) for 10 microseconds
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, LOW);
+  // Reads the echoPin, returns the sound wave travel time in microseconds
+  duration = pulseIn(echoPin, HIGH);
+  // Calculating the distance
+  distance = duration * 0.034 / 2; // Speed of sound wave divided by 2 (go and back)
+  // Displays the distance on the Serial Monitor
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
 }
 
 void loop() {
@@ -33,6 +57,8 @@ void loop() {
   leftDown.write(90);
   rightDown.write(90);
   delay(200);
+
+  measure();
 
 //  leftDown.write(60);
 //  rightDown.write(60);
