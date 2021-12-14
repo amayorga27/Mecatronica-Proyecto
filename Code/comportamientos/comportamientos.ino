@@ -7,8 +7,10 @@ const int sensorPin = 4;
 const int pingPin = 7; // Trigger Pin of Ultrasonic Sensor
 const int echoPin = 6; // Echo Pin of Ultrasonic Sensor
 
-bool stand = false;
+bool standing = false;
 bool greeted = false;
+bool dancing = false;
+int dance_seq = 0;
 
 Servo leftUp, leftDown, rightUp, rightDown;  // create servo object to control the servo
 
@@ -25,8 +27,9 @@ void setup() {
   rightUp.attach(10);
   rightDown.attach(11);
   
-  stand = false;
+  standing = false;
   greeted = false;
+  dancing = false;
 }
 
 long microsecondsToCentimeters(long microseconds) {
@@ -45,14 +48,12 @@ bool obstacle(){
    duration = pulseIn(echoPin, HIGH);
    cm = microsecondsToCentimeters(duration);
    
-   if (cm < 15 && cm !=0){
-    digitalWrite(LED_BUILTIN, HIGH);
+   if (cm < 7 && cm !=0)
     return true;
-   }
-   else{
-    digitalWrite(LED_BUILTIN, LOW);
+
+   else
     return false;
-   }
+   
    delay(100);
   
 }
@@ -113,9 +114,9 @@ void speak() {
     } 
     noTone(speakerPin);
 }
-void standing(){
-  leftUp.write(20);
-  rightUp.write(120);
+void stand(){
+  leftUp.write(45);
+  rightUp.write(95);
   leftDown.write(90);
   rightDown.write(90);
   delay(300);
@@ -175,29 +176,47 @@ void walk(){
 }
 
 void dance(){
-  dance1();
-  if(obstacle()){
-    angry();
+  if (!dancing){
+    dance_seq = random(1,2);
+    dancing = true;
   }
+  switch(dance_seq){
+    case 0:
+      dance1();
+      if(obstacle()){
+        angry();
+      }
+      break;
+    case 1:
+      dance2();
+      if(obstacle()){
+        angry();
+      }
+  }
+  
 }
 
 void dance1(){
-  leftUp.write(110);
-  rightUp.write(30);
-  delay(300);
+  if (!dancing){
+    leftUp.write(110);
+    rightUp.write(30);
+    delay(300);
+    leftDown.write(90);
+    rightDown.write(90);
+    delay(100);
+    dancing = true;
+  }
 
-  leftDown.write(90);
-  rightDown.write(90);
-  delay(100);
   leftDown.write(0);
   rightDown.write(0);
-  delay(300);
+  delay(500);
   leftDown.write(180);
   rightDown.write(180);
-  delay(300);
+  delay(500);
 }
 
 void angry(){
+  dancing = false;
   leftDown.write(90);
   rightDown.write(90);
   delay(100);
@@ -207,6 +226,21 @@ void angry(){
   leftDown.write(0);
   rightDown.write(180);
   delay(200);
+
+  
+  digitalWrite(LED_BUILTIN, HIGH);  
+  for (int i = 0; i <= 1000; i++){
+      
+      tone(speakerPin, 1000+(i*2));          
+      delay(random(.9,2));             
+  } 
+  digitalWrite(LED_BUILTIN, LOW);   
+  for (int i = 0; i <= 1000; i++){
+        
+      tone(speakerPin, 1000 + (-i*2));          
+      delay(random(.9,2));             
+  } 
+  noTone(speakerPin);
   
   leftUp.write(140);
   rightUp.write(40);
@@ -220,6 +254,12 @@ void angry(){
   leftUp.write(100);
   rightUp.write(0);
   delay(300);
+  leftUp.write(140);
+  rightUp.write(40);
+  delay(300);
+  leftUp.write(100);
+  rightUp.write(0);
+//  delay(300);
 }
 
 void greet(){
@@ -266,6 +306,50 @@ void greet(){
   
 }
 
+void dance2(){
+  
+  leftUp.write(180);
+  rightUp.write(180);
+  leftDown.write(90);
+  rightDown.write(90);
+  delay(500);
+
+  leftUp.write(40);
+  rightUp.write(40);
+  leftDown.write(90);
+  rightDown.write(90);
+  delay(500);
+
+  leftUp.write(40);
+  rightUp.write(40);
+  leftDown.write(180);
+  rightDown.write(0);
+  delay(500);
+
+  leftUp.write(40);
+  rightUp.write(40);
+  leftDown.write(90);
+  rightDown.write(90);
+  delay(500);
+
+  leftUp.write(180);
+  rightUp.write(180);
+  leftDown.write(90);
+  rightDown.write(90);
+  delay(500);
+
+  leftUp.write(180);
+  rightUp.write(180);
+  leftDown.write(180);
+  rightDown.write(0);
+  delay(500);
+
+  leftUp.write(180);
+  rightUp.write(180);
+  leftDown.write(90);
+  rightDown.write(90);
+}
+
 
 void loop(){
   int value = 0;
@@ -283,28 +367,50 @@ void loop(){
       delay(600);
     digitalWrite(LED_BUILTIN, LOW);
   }
-  if (comportamiento == 3)  comportamiento = 0;
+  if (comportamiento == 4)  comportamiento = 0;
 
   switch(comportamiento) {
     case 0:
-      if (!stand){
-        stand = true;
-        standing();
+      if (!standing){
+        stand();
+        standing = true;
       }
+      dancing = false;
       break;
     case 1:
-      stand = false;
+      standing = false;
       walk();
       break;
     case 2:
-//      speak();
-//      delay(400);
-      dance();
+      if (!standing){
+        stand();
+        standing = true;
+      }
+      speak();
+      delay(400);
+      if (random(1,3) == 2){
+      leftDown.write(40);
+      rightDown.write(140);
+      delay(300);
+      leftDown.write(0);
+      rightDown.write(180);
+      delay(300);
+      
+      leftDown.write(40);
+      rightDown.write(140);
+      delay(300);
+      leftDown.write(0);
+      rightDown.write(180);
+      delay(300);
+        
+      }
+//      dance();
       break;
       
-//    case 3:
-//      dance();
-//      break;
+    case 3:
+      standing = false;
+      dance();
+      break;
   }
   
   
