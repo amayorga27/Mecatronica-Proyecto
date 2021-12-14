@@ -1,12 +1,16 @@
 #include <Servo.h>
-long randNumber;
 
 int comportamiento = 0;
-
+long randNumber;
 const int speakerPin = 3; //buzzer to arduino pin 3
 const int sensorPin = 4;
+const int pingPin = 7; // Trigger Pin of Ultrasonic Sensor
+const int echoPin = 6; // Echo Pin of Ultrasonic Sensor
 
-Servo leftUp, leftDown, rightUp, rightDown;  // create servo object to control a servo
+bool stand = false;
+bool greeted = false;
+
+Servo leftUp, leftDown, rightUp, rightDown;  // create servo object to control the servo
 
 void setup() {
   Serial.begin(9600);   //iniciar puerto serie
@@ -17,11 +21,41 @@ void setup() {
   randomSeed(analogRead(0));
   
   leftUp.attach(8);  // attaches the servo on pin 8 to the servo object
-  leftDown.attach(11);
+  leftDown.attach(9);
   rightUp.attach(10);
-  rightDown.attach(9);
+  rightDown.attach(11);
+  
+  stand = false;
+  greeted = false;
 }
 
+long microsecondsToCentimeters(long microseconds) {
+   return microseconds / 29 / 2;
+}
+
+bool obstacle(){
+   long duration, cm;
+   pinMode(pingPin, OUTPUT);
+   digitalWrite(pingPin, LOW);
+   delayMicroseconds(2);
+   digitalWrite(pingPin, HIGH);
+   delayMicroseconds(10);
+   digitalWrite(pingPin, LOW);
+   pinMode(echoPin, INPUT);
+   duration = pulseIn(echoPin, HIGH);
+   cm = microsecondsToCentimeters(duration);
+   
+   if (cm < 15 && cm !=0){
+    digitalWrite(LED_BUILTIN, HIGH);
+    return true;
+   }
+   else{
+    digitalWrite(LED_BUILTIN, LOW);
+    return false;
+   }
+   delay(100);
+  
+}
 
 void phrase1() {
     
@@ -79,122 +113,198 @@ void speak() {
     } 
     noTone(speakerPin);
 }
-
-void stand() {
-  leftUp.write(60);
-  rightUp.write(180);
+void standing(){
+  leftUp.write(20);
+  rightUp.write(120);
   leftDown.write(90);
   rightDown.write(90);
-
+  delay(300);
   leftDown.write(0);
   rightDown.write(180);
   delay(300);
 }
 
-void walk() {
-  leftUp.write(60);
-  rightUp.write(180);
+void one_step() {
+  leftUp.write(0);
+  rightUp.write(140);
   leftDown.write(90);
   rightDown.write(90);
-
-  delay(700);
-
+  delay(800);
   
   leftDown.write(0);
   rightDown.write(180);
   delay(200);
 
-  leftUp.write(180);
-  rightUp.write(60);
-  delay(200);
+  leftUp.write(140);
+  rightUp.write(0);
+  delay(300);
 
   leftDown.write(90);
   rightDown.write(90);
   delay(200);
 }
 
+void turn(){
+  leftUp.write(140);
+  rightUp.write(140);
+  leftDown.write(90);
+  rightDown.write(90);
+  delay(800);
+  
+  leftDown.write(0);
+  rightDown.write(180);
+  delay(200);
 
-void dance() {
-  leftUp.write(180);
-  rightUp.write(180);
-  leftDown.write(90);
-  rightDown.write(90);
-  delay(500);
+  leftUp.write(0);
+  rightUp.write(0);
+  delay(300);
 
-  leftUp.write(40);
-  rightUp.write(40);
   leftDown.write(90);
   rightDown.write(90);
-  delay(500);
-  
-  leftUp.write(40);
-  rightUp.write(40);
-  leftDown.write(180);
-  rightDown.write(0);
-  delay(500);
-  
-  leftUp.write(40);
-  rightUp.write(40);
-  leftDown.write(90);
-  rightDown.write(90);
-  delay(500);
-  
-  leftUp.write(180);
-  rightUp.write(180);
-  leftDown.write(90);
-  rightDown.write(90);
-  delay(500);
-  
-  leftUp.write(180);
-  rightUp.write(180);
-  leftDown.write(180);
-  rightDown.write(0);
-  delay(500);
-  
-  leftUp.write(180);
-  rightUp.write(180);
-  leftDown.write(90);
-  rightDown.write(90);
+  delay(200);
 }
 
-void greet() {    // Por hacer
-  stand();
-  
-  leftUp.write(180);
-  rightUp.write(180);
-  leftDown.write(90);
-  rightDown.write(90);
-  delay(500);
-  
-  stand();
+void walk(){
+  if (!obstacle()){
+    one_step();
+  } else {
+    turn();
+    turn();
+//    turn();
+  }
 }
 
+void dance(){
+  dance1();
+  if(obstacle()){
+    angry();
+  }
+}
 
+void dance1(){
+  leftUp.write(110);
+  rightUp.write(30);
+  delay(300);
+
+  leftDown.write(90);
+  rightDown.write(90);
+  delay(100);
+  leftDown.write(0);
+  rightDown.write(0);
+  delay(300);
+  leftDown.write(180);
+  rightDown.write(180);
+  delay(300);
+}
+
+void angry(){
+  leftDown.write(90);
+  rightDown.write(90);
+  delay(100);
+  leftUp.write(100);
+  rightUp.write(0);
+  delay(300);
+  leftDown.write(0);
+  rightDown.write(180);
+  delay(200);
+  
+  leftUp.write(140);
+  rightUp.write(40);
+  delay(300);
+  leftUp.write(100);
+  rightUp.write(0);
+  delay(300);
+  leftUp.write(140);
+  rightUp.write(40);
+  delay(300);
+  leftUp.write(100);
+  rightUp.write(0);
+  delay(300);
+}
+
+void greet(){
+  leftDown.write(90);
+  rightDown.write(90);
+  delay(100);
+  
+  leftUp.write(30);
+  rightUp.write(70);
+  delay(300);
+
+  
+  rightDown.write(0);
+  delay(400);
+  leftUp.write(20);
+  delay(100);
+  leftUp.write(90);
+  delay(100);
+  leftUp.write(20);
+  delay(100);
+  leftUp.write(90);
+  delay(100);
+  leftUp.write(20);
+  delay(100);
+  leftUp.write(90);
+  delay(100);
+  leftUp.write(20);
+  delay(100);
+  leftUp.write(90);
+  delay(100);
+  leftUp.write(20);
+  delay(100);
+  leftUp.write(90);
+  delay(100);
+  leftUp.write(20);
+  delay(100);
+  leftUp.write(90);
+  delay(100);
+  leftUp.write(30);
+  delay(100);
+  leftDown.write(90);
+  delay(600);
+
+  
+}
 
 
 void loop(){
   int value = 0;
+
+  if(!greeted){
+    greet();
+    greeted = true;
+  }
+  
   value = digitalRead(sensorPin );  //lectura digital de pin
   
-  if (value == HIGH) {
-      digitalWrite(LED_BUILTIN, HIGH);
+  if (value == LOW) {
+    digitalWrite(LED_BUILTIN, HIGH);
       comportamiento++;
       delay(600);
+    digitalWrite(LED_BUILTIN, LOW);
   }
-  digitalWrite(LED_BUILTIN, LOW);
   if (comportamiento == 3)  comportamiento = 0;
 
   switch(comportamiento) {
     case 0:
-      walk();
+      if (!stand){
+        stand = true;
+        standing();
+      }
       break;
     case 1:
-      dance();
+      stand = false;
+      walk();
       break;
     case 2:
-      stand();
-      speak();
+//      speak();
+//      delay(400);
+      dance();
       break;
+      
+//    case 3:
+//      dance();
+//      break;
   }
   
   

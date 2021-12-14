@@ -8,31 +8,31 @@ Servo rightUp, rightDown;
 
 void setup() {
   leftUp.attach(8);  // attaches the servo on pin 9 to the servo object
-  leftDown.attach(11);
+  leftDown.attach(9);
   rightUp.attach(10);
-  rightDown.attach(9);
+  rightDown.attach(11);
 }
 
 void loop() {
-  leftUp.write(60);
+  leftUp.write(40);
   rightUp.write(180);
   leftDown.write(90);
   rightDown.write(90);
 
-  delay(700);
+  delay(800);
 
   
   leftDown.write(0);
   rightDown.write(180);
-  delay(200);
+  delay(400);
 
   leftUp.write(180);
-  rightUp.write(60);
-  delay(200);
+  rightUp.write(40);
+  delay(500);
 
   leftDown.write(90);
   rightDown.write(90);
-  delay(200);
+  delay(400);
 
 //  leftDown.write(60);
 //  rightDown.write(60);
