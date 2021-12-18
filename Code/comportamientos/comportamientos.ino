@@ -48,7 +48,7 @@ bool obstacle(){
    duration = pulseIn(echoPin, HIGH);
    cm = microsecondsToCentimeters(duration);
    
-   if (cm < 7 && cm !=0)
+   if (cm < 10 && cm !=0)
     return true;
 
    else
@@ -176,10 +176,8 @@ void walk(){
 }
 
 void dance(){
-  if (!dancing){
-    dance_seq = random(1,2);
-    dancing = true;
-  }
+    dance_seq = random(1,7);
+    
   switch(dance_seq){
     case 0:
       dance1();
@@ -189,6 +187,31 @@ void dance(){
       break;
     case 1:
       dance2();
+      if(obstacle()){
+        angry();
+      }
+    case 2:
+      dance1();
+      if(obstacle()){
+        angry();
+      }
+    case 3:
+      dance1();
+      if(obstacle()){
+        angry();
+      }
+    case 4:
+      dance1();
+      if(obstacle()){
+        angry();
+      }
+    case 5:
+      dance1();
+      if(obstacle()){
+        angry();
+      }
+    case 6:
+      dance1();
       if(obstacle()){
         angry();
       }
@@ -307,7 +330,7 @@ void greet(){
 }
 
 void dance2(){
-  
+  dancing = true;
   leftUp.write(180);
   rightUp.write(180);
   leftDown.write(90);
