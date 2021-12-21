@@ -176,7 +176,7 @@ void walk(){
 }
 
 void dance(){
-    dance_seq = random(1,7);
+    dance_seq = random(1,5);
     
   switch(dance_seq){
     case 0:
@@ -201,16 +201,6 @@ void dance(){
         angry();
       }
     case 4:
-      dance1();
-      if(obstacle()){
-        angry();
-      }
-    case 5:
-      dance1();
-      if(obstacle()){
-        angry();
-      }
-    case 6:
       dance1();
       if(obstacle()){
         angry();
@@ -375,6 +365,7 @@ void dance2(){
 
 
 void loop(){
+    digitalWrite(LED_BUILTIN, HIGH);
   int value = 0;
 
   if(!greeted){
